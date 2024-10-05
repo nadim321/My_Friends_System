@@ -2,7 +2,7 @@
 try {
     // database credential and connect
     $conn = new PDO(
-        "mysql:host=localhost;dbname=s1234567_db",
+        "mysql:host=localhost;dbname=s104100247_db",
         "root",
         ""
     );

@@ -31,7 +31,7 @@ include 'connect.php';
 
 <?php
 
-// query for create table
+// query for create table and insert data to table
 $sql = "
 CREATE TABLE IF NOT EXISTS `friends` (
   `friend_id` int(11) NOT NULL AUTO_INCREMENT,
