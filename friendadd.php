@@ -36,14 +36,14 @@ if(isset($_POST['addAsFriend'])) {
 
 
 <?php 
-
+    // get the total number of friend
     $sql = "Select f.friend_id f_id , f.profile_name profile_name, friend_id2 from myfriends mf inner join friends f on f.friend_id = mf.friend_id2 where friend_id1 = $friend_id";
     $stmt = $conn->prepare($sql);
         $result = $stmt->execute();
         $friendCount = $stmt->rowCount();
         echo "<h3> Total number of friends is $friendCount</h3>" ;
 
-    
+    // get all the registered user list with mutual friend count
     $sql = "
     SELECT profile_name , friend_id , 
     (SELECT count(*) from myfriends WHERE friend_id1 = A.friend_id and friend_id2 in (Select friend_id2 from myfriends where friend_id1 = $friend_id)) mutual 
@@ -52,6 +52,7 @@ if(isset($_POST['addAsFriend'])) {
     $stmt = $conn->prepare($sql);
     $result = $stmt->execute();
 
+    // prepar the table
     if($stmt->rowCount()){
         echo "<table width='40%' border='1px solid black'>";
         while ($row = $stmt->fetch()) {

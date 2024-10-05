@@ -9,9 +9,9 @@ if(isset($_POST['loginForm'])) {
       $email !== null && $email !== "" &&
       $password !== null && $password !== ""
     ){
-        // query for insert firends Data
+        // query for retrive Data
         $sql = "Select * from friends where friend_email = '$email' and password = '$password'";
-      //  echo $sql;
+
         $stmt = $conn->prepare($sql);
         $result = $stmt->execute();
         if($stmt->rowCount()){
