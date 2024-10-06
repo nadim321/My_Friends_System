@@ -20,7 +20,7 @@
             What would you like to do better next time?
         </li>        
         <li>
-            I complete both Task 8 and Task 9.
+            I complete both Task 8(Pagination) and Task 9(Mutual friend).
         </li>
     </ul>
 
