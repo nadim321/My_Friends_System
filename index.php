@@ -17,7 +17,7 @@ include 'connect.php';
 </div>
 <div style="width:100%"> Email: 1234567@swin.edu.au</div>
 <br/>
-<div>I declare that this assignment is my individual work. I have not worked collaboratively nor have I copied from any other student’s work or from any other source.
+<div>I declare that this assignment is my individual work. I have not worked collaboratively nor have I copied from any other student's work or from any other source.
     <br/><br/>
     Tables successfully created and populated.
 </div>

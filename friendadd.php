@@ -42,12 +42,31 @@ if(isset($_POST['addAsFriend'])) {
         $result = $stmt->execute();
         $friendCount = $stmt->rowCount();
         echo "<h3> Total number of friends is $friendCount</h3>" ;
+    $pageNumber = 1;
+    if(isset($_GET["pageNo"])){
+        $pageNumber = $_GET["pageNo"];
+    }
+    $pageCount = ($pageNumber-1) * 10;    
+
+
+    // get total row count
+    $sql = "
+    SELECT profile_name , friend_id , 
+    (SELECT count(*) from myfriends WHERE friend_id1 = A.friend_id and friend_id2 in (Select friend_id2 from myfriends where friend_id1 = $friend_id)) mutual 
+    from ( Select profile_name , friend_id from friends where friend_id !=$friend_id and friend_id not in (Select friend_id2 from myfriends where friend_id1 = $friend_id) ) A      
+    ";
+    $stmt = $conn->prepare($sql);
+    $result = $stmt->execute();
+    $rowCount = $stmt->rowCount();   
 
     // get all the registered user list with mutual friend count
     $sql = "
     SELECT profile_name , friend_id , 
     (SELECT count(*) from myfriends WHERE friend_id1 = A.friend_id and friend_id2 in (Select friend_id2 from myfriends where friend_id1 = $friend_id)) mutual 
-    from ( Select profile_name , friend_id from friends where friend_id !=$friend_id and friend_id not in (Select friend_id2 from myfriends where friend_id1 = $friend_id) ) A; 
+    from ( Select profile_name , friend_id from friends where friend_id !=$friend_id and friend_id not in (Select friend_id2 from myfriends where friend_id1 = $friend_id) ) A 
+    LIMIT 10
+    OFFSET  $pageCount
+     
     ";
     $stmt = $conn->prepare($sql);
     $result = $stmt->execute();
@@ -61,6 +80,10 @@ if(isset($_POST['addAsFriend'])) {
             <input type='submit' name='addAsFriend' id='addAsFriend' value='Add as friend'/></form></td></tr>";
         }
         echo "</table>";
+    }
+    echo "</br>";
+    for ($x = 1; $x <= ceil(($rowCount/10)); $x++) {
+        echo "<a href='friendadd.php?pageNo=$x'>$x</a> &nbsp;&nbsp;";
     }
 
 
